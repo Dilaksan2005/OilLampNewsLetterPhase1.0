@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>Admin Page</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
+
+<body class="is-preload">
+
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<a href="index.html" class="logo">Welcome Admin</a>
+		</header>
+
+		<!-- Nav -->
+
+		<!-- Main -->
+		<div id="main">
+
+			<!-- Post -->
+			<section class="post">
+				<h2 style="justify-self: center;">Subscribed Users</h2>
+				<hr />
+
+				<!-- Table -->
+				<!-- Filter-->
+				<ul class="actions"
+					style="justify-content: flex-end; display: flex; align-items: center; justify-content: flex-end;">
+					<input class="button" type="date" id="date" placeholder="Select Date">
+					<li><Button class="button primary">Filter</Button></li>
+				</ul>
+				<div class="table-wrapper">
+					<table class="alt">
+						<thead>
+							<tr>
+								<th>Date</th>
+								<th>Email</th>
+							</tr>
+						</thead>
+						<tbody id="subscribersTable">
+						</tbody>
+
+					</table>
+				</div>
+
+			</section>
+
+			<!-- Copyright -->
+			<div id="copyright">
+				<ul>
+					<li>&copy; Untitled</li>
+					<li>Design: <a href="https://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</div>
+
+		</div>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
+		<!-- Add these scripts before your closing </body> tag -->
+		<script type="module">
+			// Import the functions you need from the Firebase SDK
+			import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+			import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+
+			// Your web app's Firebase configuration
+			const firebaseConfig = {
+				apiKey: "AIzaSyCDGVmZwmJ4m-JicDa-bXEma9sp8bo9Uos",
+				authDomain: "oillampnewsletterapp.firebaseapp.com",
+				databaseURL: "https://oillampnewsletterapp-default-rtdb.asia-southeast1.firebasedatabase.app",
+				projectId: "oillampnewsletterapp",
+				storageBucket: "oillampnewsletterapp.firebasestorage.app",
+				messagingSenderId: "435713516292",
+				appId: "1:435713516292:web:f0a18ac7f61d61bbc02651",
+				measurementId: "G-5J5BPKEP7W"
+			};
+
+			// Initialize Firebase
+			const app = initializeApp(firebaseConfig);
+			const database = getDatabase(app);
+
+			// Function to format date
+			function formatDate(dateString) {
+				const date = new Date(dateString);
+				return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+			}
+
+			// Function to filter by date
+			function filterByDate(date) {
+				const tableBody = document.getElementById('subscribersTable');
+				tableBody.innerHTML = ''; // Clear current table
+
+				const subscribersRef = ref(database, 'subscribers');
+				onValue(subscribersRef, (snapshot) => {
+					snapshot.forEach((childSnapshot) => {
+						const subscriber = childSnapshot.val();
+						const subscriberDate = new Date(subscriber.date).toDateString();
+						const filterDate = new Date(date).toDateString();
+
+						if (!date || subscriberDate === filterDate) {
+							addRowToTable(subscriber);
+						}
+					});
+				});
+			}
+
+			// Function to add a row to the table
+			function addRowToTable(subscriber) {
+				const tableBody = document.getElementById('subscribersTable');
+				const row = document.createElement('tr');
+
+				const dateCell = document.createElement('td');
+				dateCell.textContent = formatDate(subscriber.date);
+
+				const emailCell = document.createElement('td');
+				emailCell.textContent = subscriber.email;
+
+				row.appendChild(dateCell);
+				row.appendChild(emailCell);
+				tableBody.appendChild(row);
+			}
+
+			// Load all subscribers initially
+			const subscribersRef = ref(database, 'subscribers');
+			onValue(subscribersRef, (snapshot) => {
+				document.getElementById('subscribersTable').innerHTML = ''; // Clear table first
+				snapshot.forEach((childSnapshot) => {
+					addRowToTable(childSnapshot.val());
+				});
+			});
+
+			// Set up date filter
+			document.querySelector('.button.primary').addEventListener('click', () => {
+				const date = document.getElementById('date').value;
+				filterByDate(date);
+			});
+		</script>
+
+</body>
+
+</html>
