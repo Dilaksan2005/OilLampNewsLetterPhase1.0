@@ -4375,14 +4375,14 @@ input, select, textarea {
 		}
 	  
 		.time-box {
-		  flex: 1 1 150px; /* Grow, shrink, and minimum width */
+		  flex: 1 1 50px; /* Grow, shrink, and minimum width */
 		  text-align: center;
 		  background: #222;
 		  padding: 20px;
 		  border-radius: 12px;
 		  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
 		  color: white;
-		  min-width: 120px; /* Ensures the boxes don't shrink too much */
+		  min-width: 80px; /* Ensures the boxes don't shrink too much */
 		}
 	  
 		.label {

@@ -28,31 +28,107 @@
 
 			<!-- Post -->
 			<section class="post">
-				<h2 style="justify-self: center;">Subscribed Users</h2>
-				<hr />
 
-				<!-- Table -->
-				<!-- Filter-->
-				<ul class="actions"
-					style="justify-content: flex-end; display: flex; align-items: center; justify-content: flex-end;">
-					<input class="button" type="date" id="date" placeholder="Select Date">
-					<li><Button class="button primary">Filter</Button></li>
-				</ul>
-				<div class="table-wrapper">
-					<table class="alt">
-						<thead>
-							<tr>
-								<th>Date</th>
-								<th>Email</th>
-							</tr>
-						</thead>
-						<tbody id="subscribersTable">
-						</tbody>
+				<!--Subscribed Users-->
+				<div style="text-align:left; margin-top:0; margin-bottom:1em;">
+	                  <button class="button primary" id="showQA">Goto Q&A results</button>
+					   <button class="button primary" id="showSubscribers">Goto Subscribed Users</button>
+                </div> 
 
-					</table>
+
+				<div id="subscribersSection">
+					<h2 style="text-align: center;">Subscribed Users</h2>
+					<hr />
+					
+					<!-- Filter -->
+					<ul class="actions" style="justify-content: flex-end; display: flex; align-items: center;">
+						<input class="button" type="date" id="date" placeholder="Select Date">
+						<li><button class="button primary" id="filterBtn">Filter</button></li>
+					</ul>
+					
+					<div class="table-wrapper">
+						<table class="alt">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Email</th>
+									<th>Name</th>
+									<th>Phone No.</th>
+								</tr>
+							</thead>
+							<tbody id="subscribersTable"></tbody>
+						</table>
+						<div style="text-align:center; margin-top:1em;">
+							<button class="button primary" id="loadMoreBtn">Load More</button>
+						</div>
+					</div>
+					</div>
+					
+					<div id="qaSection" style="display:none;">
+						<h2 style="text-align: center;">Q&A Results</h2>
+						<hr />
+					
+					
+						<!-- Q&A Filters Section -->
+						<div style="margin-bottom: 20px; background: #f5f5f5; padding: 15px; border-radius: 5px;">
+							<h3 style="margin-bottom: 10px;">Filter Results</h3>
+
+							   <div style="display: flex; justify-content: flex-end; gap: 10px; ">
+									<button class="button primary" id="applyQAFilterBtn">Apply Filter</button>
+									<button class="button" id="clearQAFilterBtn">Clear Filter</button>
+								</div>
+							<div style="display: flex; flex-wrap: wrap; gap: 15px; align-items: center;">
+								<!-- Date Filter -->
+								<div>
+									<label for="qaDateFilter">Date:</label>
+									<input type="date" id="qaDateFilter" style="margin-left: 5px;">
+								</div>
+					
+								<!-- Buying Candles Filter -->
+								<div>
+									<label for="qaBuyingFilter">Buying Candles?:</label>
+									<select id="qaBuyingFilter" style="margin-left: 5px;">
+										<option value="">All</option>
+										<option value="Yes">Yes</option>
+										<option value="No">No</option>
+									</select>
+								</div>
+					
+								<!-- User Type Filter -->
+								<div>
+									<label for="qaUserTypeFilter">User Type:</label>
+									<select id="qaUserTypeFilter" style="margin-left: 5px; margin-right: 15px;">
+										<option value="">All</option>
+										<option value="Individual">Individual</option>
+										<option value="Business">Business</option>
+									</select>
+								</div>
+	
+							</div>
+						</div>
+					
+					
+						<div class="table-wrapper">
+						<table class="alt">
+							<thead>
+								<tr>
+									<th>Date</th>
+									<th>Buying Candles?</th>
+									<th>User Type</th>
+									<th>Name & Address</th>
+								</tr>
+							</thead>
+							<tbody id="qaTable"></tbody>
+						</table>
+						<!-- Add Load More button for Q&A -->
+						<div style="text-align:center; margin-top:1em;">
+							<button class="button primary" id="loadMoreQABtn">Load More</button>
+						</div>
+					</div>
 				</div>
-
-			</section>
+				
+				
+				</section>
 
 			<!-- Copyright -->
 			<div id="copyright">
@@ -74,83 +150,344 @@
 		<script src="assets/js/main.js"></script>
 		<!-- Add these scripts before your closing </body> tag -->
 		<script type="module">
-			// Import the functions you need from the Firebase SDK
-			import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-			import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+    // Import Firebase modules
+    import { 
+        initializeApp 
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { 
+        getDatabase, 
+        ref, 
+        onValue,
+        query, 
+        limitToFirst, 
+        orderByKey, 
+        startAfter 
+    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
-			// Your web app's Firebase configuration
-			const firebaseConfig = {
-				apiKey: "AIzaSyCDGVmZwmJ4m-JicDa-bXEma9sp8bo9Uos",
-				authDomain: "oillampnewsletterapp.firebaseapp.com",
-				databaseURL: "https://oillampnewsletterapp-default-rtdb.asia-southeast1.firebasedatabase.app",
-				projectId: "oillampnewsletterapp",
-				storageBucket: "oillampnewsletterapp.firebasestorage.app",
-				messagingSenderId: "435713516292",
-				appId: "1:435713516292:web:f0a18ac7f61d61bbc02651",
-				measurementId: "G-5J5BPKEP7W"
-			};
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyCDGVmZwmJ4m-JicDa-bXEma9sp8bo9Uos",
+        authDomain: "oillampnewsletterapp.firebaseapp.com",
+        databaseURL: "https://oillampnewsletterapp-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "oillampnewsletterapp",
+        storageBucket: "oillampnewsletterapp.firebasestorage.app",
+        messagingSenderId: "435713516292",
+        appId: "1:435713516292:web:f0a18ac7f61d61bbc02651",
+        measurementId: "G-5J5BPKEP7W"
+    };
 
-			// Initialize Firebase
-			const app = initializeApp(firebaseConfig);
-			const database = getDatabase(app);
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const database = getDatabase(app);
 
-			// Function to format date
-			function formatDate(dateString) {
-				const date = new Date(dateString);
-				return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
-			}
+    // Pagination variables for subscribers
+    let lastSubscriberKey = null;
+    let isEndOfSubscriberData = false;
+    let isSubscriberFilterActive = false;
+    let currentSubscriberFilterDate = null;
 
-			// Function to filter by date
-			function filterByDate(date) {
-				const tableBody = document.getElementById('subscribersTable');
-				tableBody.innerHTML = ''; // Clear current table
+    // Pagination and filter variables for Q&A
+    let lastQAKey = null;
+    let isEndOfQAData = false;
+    let qaAllData = []; // Stores all Q&A data for filtering
+    let currentQAFilters = {
+        date: null,
+        buyingCandles: null,
+        userType: null
+    };
 
-				const subscribersRef = ref(database, 'subscribers');
-				onValue(subscribersRef, (snapshot) => {
-					snapshot.forEach((childSnapshot) => {
-						const subscriber = childSnapshot.val();
-						const subscriberDate = new Date(subscriber.date).toDateString();
-						const filterDate = new Date(date).toDateString();
+    // Format date for display
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+    }
 
-						if (!date || subscriberDate === filterDate) {
-							addRowToTable(subscriber);
-						}
-					});
-				});
-			}
+    // Add subscriber row to table
+    function addSubscriberRow(subscriber) {
+        const tableBody = document.getElementById('subscribersTable');
+        const row = document.createElement('tr');
 
-			// Function to add a row to the table
-			function addRowToTable(subscriber) {
-				const tableBody = document.getElementById('subscribersTable');
-				const row = document.createElement('tr');
+        const dateCell = document.createElement('td');
+        dateCell.textContent = formatDate(subscriber.date);
 
-				const dateCell = document.createElement('td');
-				dateCell.textContent = formatDate(subscriber.date);
+        const emailCell = document.createElement('td');
+        emailCell.textContent = subscriber.email;
 
-				const emailCell = document.createElement('td');
-				emailCell.textContent = subscriber.email;
+        const nameCell = document.createElement('td');
+        nameCell.textContent = subscriber.name;
 
-				row.appendChild(dateCell);
-				row.appendChild(emailCell);
-				tableBody.appendChild(row);
-			}
+        const phoneCell = document.createElement('td');
+        phoneCell.textContent = subscriber.phone;
 
-			// Load all subscribers initially
-			const subscribersRef = ref(database, 'subscribers');
-			onValue(subscribersRef, (snapshot) => {
-				document.getElementById('subscribersTable').innerHTML = ''; // Clear table first
-				snapshot.forEach((childSnapshot) => {
-					addRowToTable(childSnapshot.val());
-				});
-			});
+        row.appendChild(dateCell);
+        row.appendChild(emailCell);
+        row.appendChild(nameCell);
+        row.appendChild(phoneCell);
 
-			// Set up date filter
-			document.querySelector('.button.primary').addEventListener('click', () => {
-				const date = document.getElementById('date').value;
-				filterByDate(date);
-			});
-		</script>
+        tableBody.appendChild(row);
+    }
 
-</body>
+    // Add Q&A row to table
+    function addQARow(answer) {
+        const qaTable = document.getElementById('qaTable');
+        const row = document.createElement('tr');
+
+        const dateCell = document.createElement('td');
+        dateCell.textContent = formatDate(answer.date || new Date().toISOString());
+
+        const q1Cell = document.createElement('td');
+        q1Cell.textContent = answer.buyCandles || '-';
+
+        const q2Cell = document.createElement('td');
+        q2Cell.textContent = answer.userType || '-';
+
+        const q3Cell = document.createElement('td');
+        q3Cell.textContent = answer.userDetails || '-';
+
+        row.appendChild(dateCell);
+        row.appendChild(q1Cell);
+        row.appendChild(q2Cell);
+        row.appendChild(q3Cell);
+
+        qaTable.appendChild(row);
+    }
+
+    // Load subscribers with pagination
+    function loadSubscribersPaginated() {
+        if (isEndOfSubscriberData) return;
+
+        const tableBody = document.getElementById('subscribersTable');
+        let q;
+        
+        if (isSubscriberFilterActive && currentSubscriberFilterDate) {
+            // Don't use pagination for filtered results
+            filterSubscribersByDate(currentSubscriberFilterDate);
+            return;
+        } else if (lastSubscriberKey) {
+            q = query(
+                ref(database, 'newsletter_signups'), 
+                orderByKey(), 
+                startAfter(lastSubscriberKey), 
+                limitToFirst(20)
+            );
+        } else {
+            q = query(
+                ref(database, 'newsletter_signups'), 
+                orderByKey(), 
+                limitToFirst(20)
+            );
+        }
+
+        onValue(q, (snapshot) => {
+            if (!snapshot.exists()) {
+                isEndOfSubscriberData = true;
+                return;
+            }
+
+            let count = 0;
+            snapshot.forEach(childSnapshot => {
+                const subscriber = childSnapshot.val();
+                addSubscriberRow(subscriber);
+                lastSubscriberKey = childSnapshot.key;
+                count++;
+            });
+            
+            if (count < 20) isEndOfSubscriberData = true;
+        }, { onlyOnce: true });
+    }
+
+    // Load Q&A with pagination
+    function loadQAPaginated() {
+        if (isEndOfQAData) return;
+
+        const qaTable = document.getElementById('qaTable');
+        let q;
+
+        if (lastQAKey) {
+            q = query(
+                ref(database, 'qa_responses'), 
+                orderByKey(), 
+                startAfter(lastQAKey), 
+                limitToFirst(20)
+            );
+        } else {
+            q = query(
+                ref(database, 'qa_responses'), 
+                orderByKey(), 
+                limitToFirst(20)
+            );
+        }
+
+        onValue(q, (snapshot) => {
+            if (!snapshot.exists()) {
+                isEndOfQAData = true;
+                return;
+            }
+
+            let count = 0;
+            snapshot.forEach(childSnapshot => {
+                const answer = childSnapshot.val();
+                addQARow(answer);
+                qaAllData.push(answer); // Store all data for filtering
+                lastQAKey = childSnapshot.key;
+                count++;
+            });
+            
+            if (count < 20) isEndOfQAData = true;
+        }, { onlyOnce: true });
+    }
+
+    // Apply Q&A filters
+    function applyQAFilters() {
+        const qaTable = document.getElementById('qaTable');
+        qaTable.innerHTML = '';
+        
+        // Get filter values
+        const dateFilter = document.getElementById('qaDateFilter').value;
+        const buyingFilter = document.getElementById('qaBuyingFilter').value;
+        const userTypeFilter = document.getElementById('qaUserTypeFilter').value;
+        
+        // Update current filters
+        currentQAFilters = {
+            date: dateFilter || null,
+            buyingCandles: buyingFilter || null,
+            userType: userTypeFilter || null
+        };
+        
+        // Apply filters to all Q&A data
+        const filteredData = qaAllData.filter(answer => {
+            // Filter by date
+            if (currentQAFilters.date) {
+                const answerDate = new Date(answer.date).toDateString();
+                const filterDate = new Date(currentQAFilters.date).toDateString();
+                if (answerDate !== filterDate) return false;
+            }
+            
+            // Filter by buying candles
+            if (currentQAFilters.buyingCandles && 
+                answer.buyCandles !== currentQAFilters.buyingCandles) {
+                return false;
+            }
+            
+            // Filter by user type
+            if (currentQAFilters.userType && 
+                answer.userType !== currentQAFilters.userType) {
+                return false;
+            }
+            
+            return true;
+        });
+        
+        // Display filtered results
+        filteredData.forEach(answer => addQARow(answer));
+    }
+
+    // Clear Q&A filters
+    function clearQAFilters() {
+        // Reset filter inputs
+        document.getElementById('qaDateFilter').value = '';
+        document.getElementById('qaBuyingFilter').value = '';
+        document.getElementById('qaUserTypeFilter').value = '';
+        
+        // Reset filter state
+        currentQAFilters = {
+            date: null,
+            buyingCandles: null,
+            userType: null
+        };
+        
+        // Reload paginated data
+        resetAndLoadQA();
+    }
+
+    // Reset subscribers pagination and reload
+    function resetAndLoadSubscribers() {
+        const tableBody = document.getElementById('subscribersTable');
+        tableBody.innerHTML = '';
+        lastSubscriberKey = null;
+        isEndOfSubscriberData = false;
+        isSubscriberFilterActive = false;
+        currentSubscriberFilterDate = null;
+        document.getElementById('date').value = '';
+        loadSubscribersPaginated();
+    }
+
+    // Reset Q&A pagination and reload
+    function resetAndLoadQA() {
+        const qaTable = document.getElementById('qaTable');
+        qaTable.innerHTML = '';
+        lastQAKey = null;
+        isEndOfQAData = false;
+        qaAllData = []; // Clear stored data
+        loadQAPaginated();
+    }
+
+    // Filter subscribers by date
+    function filterSubscribersByDate(date) {
+        const tableBody = document.getElementById('subscribersTable');
+        tableBody.innerHTML = '';
+        isSubscriberFilterActive = true;
+        currentSubscriberFilterDate = date;
+
+        if (!date) {
+            resetAndLoadSubscribers();
+            return;
+        }
+
+        const subscribersRef = ref(database, 'newsletter_signups');
+        onValue(subscribersRef, (snapshot) => {
+            snapshot.forEach((childSnapshot) => {
+                const subscriber = childSnapshot.val();
+                const subscriberDate = new Date(subscriber.date).toDateString();
+                const filterDate = new Date(date).toDateString();
+
+                if (subscriberDate === filterDate) {
+                    addSubscriberRow(subscriber);
+                }
+            });
+        }, { onlyOnce: true });
+    }
+
+    // Setup event listeners when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initial load of subscribers
+        resetAndLoadSubscribers();
+
+        // Load more button for subscribers
+        document.getElementById('loadMoreBtn').addEventListener('click', () => {
+            loadSubscribersPaginated();
+        });
+
+        // Date filter button for subscribers
+        document.getElementById('filterBtn').addEventListener('click', () => {
+            const date = document.getElementById('date').value;
+            filterSubscribersByDate(date);
+        });
+
+        // View toggle buttons
+        document.getElementById('showQA').addEventListener('click', () => {
+            document.getElementById('subscribersSection').style.display = 'none';
+            document.getElementById('qaSection').style.display = 'block';
+            resetAndLoadQA();
+        });
+
+        document.getElementById('showSubscribers').addEventListener('click', () => {
+            document.getElementById('qaSection').style.display = 'none';
+            document.getElementById('subscribersSection').style.display = 'block';
+            resetAndLoadSubscribers();
+        });
+
+        // Load more button for Q&A
+        document.getElementById('loadMoreQABtn').addEventListener('click', () => {
+            loadQAPaginated();
+        });
+
+        // Q&A Filter buttons
+        document.getElementById('applyQAFilterBtn').addEventListener('click', applyQAFilters);
+        document.getElementById('clearQAFilterBtn').addEventListener('click', clearQAFilters);
+    });
+</script>
+		
+	</body>
 
 </html>
