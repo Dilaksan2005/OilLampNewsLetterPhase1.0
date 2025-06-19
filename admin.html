@@ -11,8 +11,25 @@
 	</noscript>
 </head>
 
-<body class="is-preload">
+<!--Loader-->
+			<script>
+				window.addEventListener("load", function () {
+					const loader = document.getElementById("loader-wrapper");
+					if (loader) {
+					loader.classList.add("fade-out");
+					setTimeout(() => {
+						loader.style.display = "none";
+					}, 800); // Matches fade-out duration in CSS
+					}
+				});
+			</script>
+<!--Loader Ends-->
 
+<body class="is-preload">
+<!-- Loader -->
+	 <div id="loader-wrapper">
+      <div class="loader"></div>
+	  </div>
 	<!-- Wrapper -->
 	<div id="wrapper">
 
