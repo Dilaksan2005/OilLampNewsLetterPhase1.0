@@ -7,19 +7,6 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
-		<!--Loader-->
-			<script>
-				window.addEventListener("load", function () {
-					const loader = document.getElementById("loader-wrapper");
-					if (loader) {
-					loader.classList.add("fade-out");
-					setTimeout(() => {
-						loader.style.display = "none";
-					}, 800); 
-					}
-				});
-			</script>
-		<!--Loader Ends-->
 	<body class="is-preload">
     <!-- Loader -->
 	 <div id="loader-wrapper">
@@ -59,7 +46,7 @@
 							<!--timer-->
 							<div>
 								<h2 style="justify-self: center; text-align: center;">Website Launches In</h2>
-								<div id="countdown">
+								<div style="justify-self: center; text-align: center;" id="countdown">
 									<div class="time-box">
 										<div id="months">0</div>
 										<div class="label">Months</div>
@@ -90,12 +77,13 @@
 						</article>
 						
 						<section>
-						<!-- Slider – Upcoming/Featured Product Images -->
+						<!-- Slider – Upcoming/Featured Product Images -->		
 							<h2 style="justify-self: center; text-align: center;">Slider Upcoming/Featured Products</h2>
                         <!-- End Slider – Upcoming/Featured Product Images -->
-						</section>
+						</section>	
+					
 						
-
+						
 						<!-- Featured Products -->
 						<h2 style="justify-self: center; text-align: center;">Featured Products</h2>
 							<section class="posts">
@@ -421,6 +409,78 @@
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
+
+   
+        // Image Slider Script
+        const initSlider = () => {
+            const imageList = document.querySelector(".slider-wrapper .image-list");
+            const slideButtons = document.querySelectorAll(".slider-wrapper .slide-button");
+            const sliderScrollbar = document.querySelector(".slider-scrollbar");
+            const scrollbarThumb = sliderScrollbar.querySelector(".scrollbar-thumb");
+            const maxScrollLeft = imageList.scrollWidth - imageList.clientWidth;
+            
+            // Handle scrollbar thumb drag
+            scrollbarThumb.addEventListener("mousedown", (e) => {
+                const startX = e.clientX;
+                const thumbPosition = scrollbarThumb.offsetLeft;
+                const maxThumbPosition = sliderScrollbar.getBoundingClientRect().width - scrollbarThumb.offsetWidth;
+                
+                // Update thumb position on mouse move
+                const handleMouseMove = (e) => {
+                    const deltaX = e.clientX - startX;
+                    const newThumbPosition = thumbPosition + deltaX;
+                    const boundedPosition = Math.max(0, Math.min(maxThumbPosition, newThumbPosition));
+                    const scrollPosition = (boundedPosition / maxThumbPosition) * maxScrollLeft;
+                    
+                    scrollbarThumb.style.left = `${boundedPosition}px`;
+                    imageList.scrollLeft = scrollPosition;
+                }
+                
+                // Remove event listeners on mouse up
+                const handleMouseUp = () => {
+                    document.removeEventListener("mousemove", handleMouseMove);
+                    document.removeEventListener("mouseup", handleMouseUp);
+                }
+                
+                // Add event listeners for drag interaction
+                document.addEventListener("mousemove", handleMouseMove);
+                document.addEventListener("mouseup", handleMouseUp);
+            });
+            
+            // Slide images according to the slide button clicks
+            slideButtons.forEach(button => {
+                button.addEventListener("click", () => {
+                    const direction = button.id === "prev-slide" ? -1 : 1;
+                    const scrollAmount = imageList.clientWidth * direction;
+                    imageList.scrollBy({ left: scrollAmount, behavior: "smooth" });
+                });
+            });
+            
+            // Show or hide slide buttons based on scroll position
+            const handleSlideButtons = () => {
+                slideButtons[0].style.display = imageList.scrollLeft <= 0 ? "none" : "flex";
+                slideButtons[1].style.display = imageList.scrollLeft >= maxScrollLeft ? "none" : "flex";
+            }
+            
+            // Update scrollbar thumb position based on image scroll
+            const updateScrollThumbPosition = () => {
+                const scrollPosition = imageList.scrollLeft;
+                const thumbPosition = (scrollPosition / maxScrollLeft) * (sliderScrollbar.clientWidth - scrollbarThumb.offsetWidth);
+                scrollbarThumb.style.left = `${thumbPosition}px`;
+            }
+            
+            // Call these two functions when image list scrolls
+            imageList.addEventListener("scroll", () => {
+                updateScrollThumbPosition();
+                handleSlideButtons();
+            });
+            
+            // Initialize slider state
+            handleSlideButtons();
+        }
+        
+        window.addEventListener("resize", initSlider);
+        window.addEventListener("load", initSlider);
 </script>
 
 <script src="assets/js/jquery.min.js"></script>
@@ -432,135 +492,133 @@
 <script src="assets/js/main.js"></script>
 
 <script type="module">
-  // --- Firebase SDK imports ---
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-  import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+	// --- Firebase SDK imports ---
+	import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+	import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
-  // --- Firebase configuration ---
-  const firebaseConfig = {
-    apiKey: "AIzaSyCDGVmZwmJ4m-JicDa-bXEma9sp8bo9Uos",
-    authDomain: "oillampnewsletterapp.firebaseapp.com",
-    databaseURL: "https://oillampnewsletterapp-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "oillampnewsletterapp",
-    storageBucket: "oillampnewsletterapp.firebasestorage.app",
-    messagingSenderId: "435713516292",
-    appId: "1:435713516292:web:f0a18ac7f61d61bbc02651",
-    measurementId: "G-5J5BPKEP7W"
-  };
+	// --- Firebase configuration ---
+	const firebaseConfig = {
+		apiKey: "AIzaSyCDGVmZwmJ4m-JicDa-bXEma9sp8bo9Uos",
+		authDomain: "oillampnewsletterapp.firebaseapp.com",
+		databaseURL: "https://oillampnewsletterapp-default-rtdb.asia-southeast1.firebasedatabase.app",
+		projectId: "oillampnewsletterapp",
+		storageBucket: "oillampnewsletterapp.firebasestorage.app",
+		messagingSenderId: "435713516292",
+		appId: "1:435713516292:web:f0a18ac7f61d61bbc02651",
+		measurementId: "G-5J5BPKEP7W"
+	};
 
-  // --- Initialize Firebase app and database ---
-  const app = initializeApp(firebaseConfig);
-  const database = getDatabase(app);
+	// --- Initialize Firebase app and database ---
+	const app = initializeApp(firebaseConfig);
+	const database = getDatabase(app);
 
-  function isValidPhone(phone)
+  function isValidPhone(phone) 
   {
      const regex = /^[+\d\s]+$/;
      return regex.test(phone);
     }
 
-  // --- Handle newsletter form submission ---
-  document.getElementById('emailForm').addEventListener('submit', function (e) {
-    e.preventDefault(); // Prevent form from refreshing the page
+	// --- Handle newsletter form submission ---
+	document.getElementById('emailForm').addEventListener('submit', function (e) {
+		e.preventDefault(); // Prevent form from refreshing the page
 
-    // --- Capture form values ---
-    const email = document.getElementById('email').value.trim();
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('PhoneNo').value.trim();
-    const timestamp = new Date().toISOString();
+		// --- Capture form values ---
+		const email = document.getElementById('email').value.trim();
+		const name = document.getElementById('name').value.trim();
+		const phone = document.getElementById('PhoneNo').value.trim();
+		const timestamp = new Date().toISOString();
 
-	
+
 
     // --- Basic validatio ---
     if (!email || !name || !phone) {
       alert("Please fill all fields.");
       return;
-    }
+    } 
 	
 	if (!isValidPhone(phone)) {
         alert("Please enter a valid number.");
 		return;
 	}
 
-    // --- Save to Firebase under 'newsletter_signups' node ---
-    push(ref(database, 'newsletter_signups'), {
-      email: email,
-      name: name,
-      phone: phone,
-      date: timestamp
-    })
-      .then(() => {
-        // --- Success feedback ---
-        const messageDiv = document.getElementById('formMessage');
-        messageDiv.textContent = 'Thank you for subscribing!';
-        messageDiv.style.color = 'green';
-        messageDiv.style.display = 'block';
+		// --- Save to Firebase under 'newsletter_signups' node ---
+		push(ref(database, 'newsletter_signups'), {
+			email: email,
+			name: name,
+			phone: phone,
+			date: timestamp
+		})
+			.then(() => {
+				// --- Success feedback ---
+				const messageDiv = document.getElementById('formMessage');
+				messageDiv.textContent = 'Thank you for subscribing!';
+				messageDiv.style.color = 'green';
+				messageDiv.style.display = 'block';
 
-        // --- Reset the form ---
-        document.getElementById('emailForm').reset();
+				// --- Reset the form ---
+				document.getElementById('emailForm').reset();
 
-        // --- Hide success message after 5 seconds ---
-        setTimeout(() => {
-          messageDiv.style.display = 'none';
-        }, 5000);
-      })
-      .catch((error) => {
-        // --- Handle Firebase errors ---
-        const messageDiv = document.getElementById('formMessage');
-        messageDiv.textContent = 'Error: ' + error.message;
-        messageDiv.style.color = 'red';
-        messageDiv.style.display = 'block';
-      });
+				// --- Hide success message after 5 seconds ---
+				setTimeout(() => {
+					messageDiv.style.display = 'none';
+				}, 5000);
+			})
+			.catch((error) => {
+				// --- Handle Firebase errors ---
+				const messageDiv = document.getElementById('formMessage');
+				messageDiv.textContent = 'Error: ' + error.message;
+				messageDiv.style.color = 'red';
+				messageDiv.style.display = 'block';
+			});
 
-
-     // Send the email to the backend for processing
+    // --- Send the email to your backend server for processing ---
     fetch('http://localhost:3000/send-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email }) // Send email data to backend
+      body: JSON.stringify({ email, name, phone }) // Sending all data
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Email send status:', data.message);
-    })
-    .catch(error => {
-      console.error('Error sending email:', error);
-    });
-
-  });
-
-  // --- Handle Q&A form submission ---
-  document.getElementById('userSurveyForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    // Capture input values
-    const buyCandles = document.querySelector('input[name="buyCandles"]:checked')?.value;
-    const userType = document.getElementById('userType').value.trim();
-    const userDetails = document.getElementById('userDetails').value.trim();
-    const timestamp = new Date().toISOString();
-
-    // Validation
-    if (!buyCandles || !userType || !userDetails) {
-      displaySurveyMessage('Please fill out all fields.', 'red');
-      return;
-    }
-
-    // Push to Firebase under 'qa_responses' node
-    push(ref(database, 'qa_responses'), {
-      buyCandles: buyCandles,
-      userType: userType,
-      userDetails: userDetails,
-      date: timestamp
-    })
-      .then(() => {
-        displaySurveyMessage('Thank you! Your response has been submitted.', 'green');
-        document.getElementById('userSurveyForm').reset();
+      .then(response => response.json())
+      .then(data => {
+        console.log('Email send status:', data.message);
       })
-      .catch((error) => {
-        displaySurveyMessage('Error: ' + error.message, 'red');
+      .catch(error => {
+        console.error('Error sending email:', error);
       });
   });
+
+	// --- Handle Q&A form submission ---
+	document.getElementById('userSurveyForm').addEventListener('submit', function (e) {
+		e.preventDefault();
+
+		// Capture input values
+		const buyCandles = document.querySelector('input[name="buyCandles"]:checked')?.value;
+		const userType = document.getElementById('userType').value.trim();
+		const userDetails = document.getElementById('userDetails').value.trim();
+		const timestamp = new Date().toISOString();
+
+		// Validation
+		if (!buyCandles || !userType || !userDetails) {
+			displaySurveyMessage('Please fill out all fields.', 'red');
+			return;
+		}
+
+		// Push to Firebase under 'qa_responses' node
+		push(ref(database, 'qa_responses'), {
+			buyCandles: buyCandles,
+			userType: userType,
+			userDetails: userDetails,
+			date: timestamp
+		})
+			.then(() => {
+				displaySurveyMessage('Thank you! Your response has been submitted.', 'green');
+				document.getElementById('userSurveyForm').reset();
+			})
+			.catch((error) => {
+				displaySurveyMessage('Error: ' + error.message, 'red');
+			});
+	});
 
   // Function to show survey message
   function displaySurveyMessage(message, color) {
@@ -572,8 +630,9 @@
       msgDiv.style.display = 'none';
     }, 5000);
   }
-
 </script>
+
+
 
 	</body>
 </html>
