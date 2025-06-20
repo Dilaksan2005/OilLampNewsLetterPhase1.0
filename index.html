@@ -6,12 +6,194 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
+        <!-- Google Fonts for icons -->
+		<link rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+		<style>
+			/* Updated slider styles */
+			.slider-section {
+				padding: 40px 0;
+				background: #f9f9f9;
+			}
+		
+			.slider-wrapper {
+				position: relative;
+				max-width: 1200px;
+				margin: 0 auto;
+				overflow: hidden;
+			}
+		
+			.slide-button {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				outline: none;
+				border: none;
+				height: 50px;
+				width: 40px;
+				z-index: 10;
+				display: flex;
+				cursor: pointer;
+				font-size: 0.9rem;
+				/* Smaller icon size */
+				background: #ffffff;
+				/* White background */
+				align-items: center;
+				justify-content: center;
+				border-radius: 50%;
+				transition: all 0.3s ease;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+				color: #000000;
+				/* Black icon */
+				/* Black border */
+			}
+		
+		
+			.slide-button:hover {
+				background: hsla(0, 0%, 100%, 0.692);
+				/* Gold color on hover */
+				color: #ffffff;
+				/* White icon on hover */
+				/* Gold border on hover */
+				transform: translateY(-50%) scale(1.05);
+			}
+		
+		
+			.slide-button#prev-slide {
+				left: 15px;
+			}
+		
+			.slide-button#next-slide {
+				right: 15px;
+			}
+		
+			.image-list {
+				display: flex;
+				gap: 18px;
+				list-style: none;
+				margin: 0;
+				padding: 20px;
+				overflow-x: auto;
+				scrollbar-width: none;
+				scroll-behavior: smooth;
+				scroll-snap-type: x mandatory;
+			}
+		
+			.image-list::-webkit-scrollbar {
+				display: none;
+			}
+		
+			.image-item {
+				flex: 0 0 auto;
+				width: 280px;
+				height: 350px;
+				object-fit: cover;
+				border-radius: 8px;
+				box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+				transition: transform 0.3s ease;
+				scroll-snap-align: start;
+			}
+		
+			.image-item:hover {
+				transform: scale(1.03);
+			}
+		
+			.slider-scrollbar {
+				height: 24px;
+				width: 100%;
+				display: flex;
+				align-items: center;
+				max-width: 900px;
+				margin: 0 auto;
+				padding: 0 20px;
+			}
+		
+			.scrollbar-track {
+				background: #ddd;
+				width: 100%;
+				height: 3px;
+				display: flex;
+				align-items: center;
+				border-radius: 4px;
+				position: relative;
+				transition: height 0.3s ease;
+			}
+		
+			.slider-scrollbar:hover .scrollbar-track {
+				height: 5px;
+			}
+		
+			.scrollbar-thumb {
+				position: absolute;
+				background: #333;
+				top: 0;
+				bottom: 0;
+				width: 50%;
+				height: 100%;
+				cursor: grab;
+				border-radius: inherit;
+				transition: height 0.3s ease, top 0.3s ease;
+			}
+		
+			.scrollbar-thumb:active {
+				cursor: grabbing;
+				height: 8px;
+				top: -2px;
+			}
+		
+			.scrollbar-thumb::after {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -10px;
+				bottom: -10px;
+			}
+		
+			/* Responsive adjustments */
+			@media only screen and (max-width: 1023px) {
+				.slide-button {
+					height: 44px;
+					width: 34px;
+					font-size: 0.85rem;
+					/* Even smaller on tablets */
+				}
+		
+				.image-list {
+					gap: 10px;
+					margin-bottom: 15px;
+				}
+		
+				.image-item {
+					width: 250px;
+					height: 320px;
+				}
+		
+				.slider-scrollbar .scrollbar-thumb {
+					width: 20%;
+				}
+			}
+		
+			@media only screen and (max-width: 768px) {
+				.slide-button {
+					height: 42px;
+					width: 32px;
+					font-size: 0.8rem;
+					/* Smallest on mobile */
+				}
+		
+				.image-item {
+					width: 220px;
+					height: 280px;
+				}
+			}
+		</style>
+		</head>
 	<body class="is-preload">
-    <!-- Loader -->
+    <!--Loader-->
 	 <div id="loader-wrapper">
       <div class="loader"></div>
-	  </div>
+	 </div>
 		<!-- Wrapper -->
 			<div id="wrapper" class="fade-in">
 
@@ -76,12 +258,42 @@
 						
 						</article>
 						
-						<section>
-						<!-- Slider – Upcoming/Featured Product Images -->		
-							<h2 style="justify-self: center; text-align: center;">Slider Upcoming/Featured Products</h2>
-                        <!-- End Slider – Upcoming/Featured Product Images -->
-						</section>	
-					
+					<!-- Image Slider Section -->
+						<section class="slider-section">
+							<h2 style="text-align: center; margin-bottom: 30px;">Our Products</h2>
+							<div class="slider-wrapper">
+								<button id="prev-slide" class="slide-button material-symbols-rounded">
+									chevron_left
+								</button>
+								<ul class="image-list">
+									<img class="image-item" src="images/slider-pic-1.jpg" alt="Artisan Candles">
+									<img class="image-item" src="images/slider-pic-2.jpg" alt="Vintage Oil Lamp">
+									<img class="image-item" src="images/slider-pic-3.jpg" alt="Crystal Candle Holder">
+									<img class="image-item" src="images/slider-pic-4.jpg" alt="Modern Lantern">
+									<img class="image-item" src="images/slider-pic-5.jpg" alt="Scented Soy Candles">
+									<img class="image-item" src="images/slider-pic-6.jpeg" alt="Brass Oil Lamp">
+									<img class="image-item" src="images/slider-pic-7.jpg" alt="Artisan Candles">
+									<img class="image-item" src="images/slider-pic-8.jpg" alt="Vintage Oil Lamp">
+									<img class="image-item" src="images/slider-pic-9.jpg" alt="Crystal Candle Holder">
+									<img class="image-item" src="images/slider-pic-10.jpg" alt="Modern Lantern">
+									<img class="image-item" src="images/slider-pic-11.jpg" alt="Scented Soy Candles">
+									<img class="image-item" src="images/slider-pic-12.jpg" alt="Brass Oil Lamp">
+									<img class="image-item" src="images/slider-pic-13.jpg" alt="Brass Oil Lamp">
+									<img class="image-item" src="images/slider-pic-14.jpg" alt="Brass Oil Lamp">
+								</ul>
+								<button id="next-slide" class="slide-button material-symbols-rounded">
+									chevron_right
+								</button>
+							</div>
+							<div class="slider-scrollbar">
+								<div class="scrollbar-track">
+									<div class="scrollbar-thumb"></div>
+								</div>
+							</div>
+						</section>
+						<!-- End Image Slider Section -->
+						
+						
 						
 						
 						<!-- Featured Products -->
@@ -512,7 +724,7 @@
 	const app = initializeApp(firebaseConfig);
 	const database = getDatabase(app);
 
-  function isValidPhone(phone) 
+function isValidPhone(phone) 
   {
      const regex = /^[+\d\s]+$/;
      return regex.test(phone);
@@ -530,7 +742,7 @@
 
 
 
-    // --- Basic validatio ---
+// --- Basic validatio ---
     if (!email || !name || !phone) {
       alert("Please fill all fields.");
       return;
@@ -570,23 +782,113 @@
 				messageDiv.style.color = 'red';
 				messageDiv.style.display = 'block';
 			});
+		})
 
-    // --- Send the email to your backend server for processing ---
-    fetch('http://localhost:3000/send-email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, name, phone }) // Sending all data
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Email send status:', data.message);
-      })
-      .catch(error => {
-        console.error('Error sending email:', error);
-      });
-  });
+	function isValidPhone(phone) {
+		const regex = /^[+\d\s]+$/;
+		return regex.test(phone);
+	}
+
+	// --- Handle newsletter form submission ---
+	document.getElementById('emailForm').addEventListener('submit', function (e) {
+		e.preventDefault(); // Prevent form from refreshing the page
+
+		// --- Capture form values ---
+		const email = document.getElementById('email').value.trim();
+		const name = document.getElementById('name').value.trim();
+		const phone = document.getElementById('PhoneNo').value.trim();
+		const timestamp = new Date().toISOString();
+
+
+
+	// --- Handle Q&A form submission ---
+	document.getElementById('userSurveyForm').addEventListener('submit', function (e) {
+		e.preventDefault();
+
+		// Capture input values
+		const buyCandles = document.querySelector('input[name="buyCandles"]:checked')?.value;
+		const userType = document.getElementById('userType').value.trim();
+		const userDetails = document.getElementById('userDetails').value.trim();
+		const timestamp = new Date().toISOString();
+
+		// Validation
+		if (!buyCandles || !userType || !userDetails) {
+			displaySurveyMessage('Please fill out all fields.', 'red');
+			return;
+		}
+
+		// Push to Firebase under 'qa_responses' node
+		push(ref(database, 'qa_responses'), {
+			buyCandles: buyCandles,
+			userType: userType,
+			userDetails: userDetails,
+			date: timestamp
+		})
+			.then(() => {
+				displaySurveyMessage('Thank you! Your response has been submitted.', 'green');
+				document.getElementById('userSurveyForm').reset();
+			})
+			.catch((error) => {
+				displaySurveyMessage('Error: ' + error.message, 'red');
+			});
+	});
+		// --- Basic validatio ---
+		if (!email || !name || !phone) {
+			alert("Please fill all fields.");
+			return;
+		}
+
+		if (!isValidPhone(phone)) {
+			alert("Please enter a valid number.");
+			return;
+		}
+
+		// --- Save to Firebase under 'newsletter_signups' node ---
+		push(ref(database, 'newsletter_signups'), {
+			email: email,
+			name: name,
+			phone: phone,
+			date: timestamp
+		})
+			.then(() => {
+				// --- Success feedback ---
+				const messageDiv = document.getElementById('formMessage');
+				messageDiv.textContent = 'Thank you for subscribing!';
+				messageDiv.style.color = 'green';
+				messageDiv.style.display = 'block';
+
+				// --- Reset the form ---
+				document.getElementById('emailForm').reset();
+
+				// --- Hide success message after 5 seconds ---
+				setTimeout(() => {
+					messageDiv.style.display = 'none';
+				}, 5000);
+			})
+			.catch((error) => {
+				// --- Handle Firebase errors ---
+				const messageDiv = document.getElementById('formMessage');
+				messageDiv.textContent = 'Error: ' + error.message;
+				messageDiv.style.color = 'red';
+				messageDiv.style.display = 'block';
+			});
+
+		// --- Send the email to your backend server for processing ---
+		fetch('http://localhost:3000/send-email', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({ email, name, phone }) // Sending all data
+		})
+			.then(response => response.json())
+			.then(data => {
+				console.log('Email send status:', data.message);
+			})
+			.catch(error => {
+				console.error('Error sending email:', error);
+			});
+	});
 
 	// --- Handle Q&A form submission ---
 	document.getElementById('userSurveyForm').addEventListener('submit', function (e) {
@@ -620,19 +922,17 @@
 			});
 	});
 
-  // Function to show survey message
-  function displaySurveyMessage(message, color) {
-    const msgDiv = document.getElementById('surveyMessage');
-    msgDiv.textContent = message;
-    msgDiv.style.color = color;
-    msgDiv.style.display = 'block';
-    setTimeout(() => {
-      msgDiv.style.display = 'none';
-    }, 5000);
-  }
+// Function to show survey message
+	function displaySurveyMessage(message, color) {
+		const msgDiv = document.getElementById('surveyMessage');
+		msgDiv.textContent = message;
+		msgDiv.style.color = color;
+		msgDiv.style.display = 'block';
+		setTimeout(() => {
+			msgDiv.style.display = 'none';
+		}, 5000);
+	}
 </script>
 
-
-
-	</body>
+</body>
 </html>
