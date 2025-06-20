@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	Massively by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html style=" scroll-behavior: smooth; ">
 	<head>
 		<title>OilLampWebsite</title>
@@ -12,8 +7,24 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
+		<!--Loader-->
+			<script>
+				window.addEventListener("load", function () {
+					const loader = document.getElementById("loader-wrapper");
+					if (loader) {
+					loader.classList.add("fade-out");
+					setTimeout(() => {
+						loader.style.display = "none";
+					}, 800); 
+					}
+				});
+			</script>
+		<!--Loader Ends-->
 	<body class="is-preload">
-
+    <!-- Loader -->
+	 <div id="loader-wrapper">
+      <div class="loader"></div>
+	  </div>
 		<!-- Wrapper -->
 			<div id="wrapper" class="fade-in">
 
@@ -27,7 +38,7 @@
 							<li><a href="#header" class="button icon solid solo fa-arrow-down scrolly">Continue</a></li>
 						</ul>
 					</div>
-
+				
 				<!-- Header -->
 					<header id="header">
 						<a class="logo">Brand Name</a>
@@ -39,7 +50,6 @@
 						<!-- Introduction Post -->
 						<article class="post featured">
 							<header class="major">
-						
 								<h2>A Glow Worth Waiting For</h2>
 								<p>At [Brand Name], we believe light is more than just illumination, it’s an experience. Each of our candles,
 									oil lamps, and decorative pieces is designed to evoke nostalgia, elegance, and serenity. Inspired by
@@ -80,16 +90,15 @@
 						</article>
 						
 						<section>
-						<!-- Slider – Upcoming/Featured Product Images -->		
+						<!-- Slider – Upcoming/Featured Product Images -->
 							<h2 style="justify-self: center; text-align: center;">Slider Upcoming/Featured Products</h2>
                         <!-- End Slider – Upcoming/Featured Product Images -->
-						</section>	
-					
+						</section>
 						
 
 						<!-- Featured Products -->
 						<h2 style="justify-self: center; text-align: center;">Featured Products</h2>
-							<section class="posts">																
+							<section class="posts">
                                 <!-- Posts -->
 								<article>
 									<header>
@@ -128,14 +137,95 @@
 
 								</section>
 					    <!-- End Featured Products -->
-						
-						<section>
-							<!-- View More Products -->
+						 <!-- Product Cards Starts -->
+												<section>
 							<h2 style="justify-self: center; text-align: center;">View More Products</h2>
-							<!-- End View More Products -->	
-						</section>                        					 
+							
+							<!-- P1-->
+							<div class="row" id="allProductsContainer">
+								<div class="col-4 col-12-medium product-item">
+									<div class="card">
+										<div class="card__wrapper">
+											<img src="images/pic06.jpg" alt="Product 1">
+										</div>
+										<div class="card__title">Product Name 1</div>
+										<div class="card__subtitle">Short description for product 1.</div>
+										<ul class="actions fit"></ul>
+									</div>
+								</div>
+
+							<!-- P2-->
+								<div class="col-4 col-12-medium product-item">
+									<div class="card">
+										<div class="card__wrapper">
+											<img src="images/pic07.jpg" alt="Product 2">
+										</div>
+										<div class="card__title">Product Name 2</div>
+										<div class="card__subtitle">Short description for product 2.</div>
+										<ul class="actions fit">
+											<li></li>
+										</ul>
+									</div>
+								</div>
+							<!-- P3-->
+								<div class="col-4 col-12-medium product-item">
+									<div class="card">
+										<div class="card__wrapper">
+											<img src="images/pic06.jpg" alt="Product 3">
+										</div>
+										<div class="card__title">Product Name 3</div>
+										<div class="card__subtitle">Short description for product 3.</div>
+										<ul class="actions fit">
+											<li></li>
+										</ul>
+									</div>
+								</div>
+							<!-- P4-->
+								<div class="col-4 col-12-medium product-item">
+									<div class="card">
+										<div class="card__wrapper">
+											<img src="images/pic06.jpg" alt="Product 4">
+										</div>
+										<div class="card__title">Product Name 4</div>
+										<div class="card__subtitle">Short description for product 4.</div>
+										<ul class="actions fit">
+											<li></li>
+										</ul>
+									</div>
+								</div>
+							<!-- P5-->
+								<div class="col-4 col-12-medium product-item">
+									<div class="card">
+										<div class="card__wrapper">
+											<img src="images/pic06.jpg" alt="Product 5">
+										</div>
+										<div class="card__title">Product Name 5</div>
+										<div class="card__subtitle">Short description for product 5.</div>
+										<ul class="actions fit">
+											<li></li>
+										</ul>
+									</div>
+								</div>
+							<!-- P6-->
+								<div class="col-4 col-12-medium product-item">
+									<div class="card">
+										<div class="card__wrapper">
+											<img src="images/pic06.jpg" alt="Product 6">
+										</div>
+										<div class="card__title">Product Name 6</div>
+										<div class="card__subtitle">Short description for product 6.</div>
+										<ul class="actions fit">
+											<li></li>
+										</ul>
+									</div>
+								</div>
+								</div> <div style="text-align: center; margin-top: 3rem;">
+								<button id="viewMoreProductsBtn" class="button primary large">View More Products</button>
+							</div>
+						</section>
 							
 						<section>
+						<!-- Product Cards Ends-->
 						<!-- Q&A Form -->
 									<form id="userSurveyForm">
 										<h2 style="text-align: center;">Tell Us About Yourself</h2>
@@ -212,7 +302,7 @@
 								</div>
 								<ul class="actions">
 									<li><input type="submit" value="Subscribe" /></li>
-                                     <li><Button class="button"><a href="admin.html">goto Admin Panel (temperary link)</a></Button></li>
+                                     <li><Button class="button"><a href="admin.html"> Admin Panel (temporary link)</a></Button></li>
 								</ul>
    								  
 								  <div id="formMessage" style="display:none; margin-top: 20px;"></div>
@@ -227,7 +317,7 @@
 							</section>
 							<section>
 								<h3>Email</h3>
-								<p><a href="#">info@untitled.tld</a></p>
+								<p><a href="https://mail.google.com/mail/?view=cm&fs=1&to=info.elegancecandles@gmail.com&su=Order%20Inquiry&body=Hi%20Elegance%20Candles,%0D%0A%0D%0AI%20would%20like%20to%20place%20an%20order%20for%20your%20products.%20Please%20send%20me%20your%20catalog%20and%20pricing.%0D%0A%0D%0AThank%20you!" target="_blank">info.elegancecandles@gmail.com</a></p>
 							</section>
 							<section>
 								<h3>Social</h3>
@@ -252,8 +342,59 @@
 			</div>
 
 	<!-- Scripts -->
+	 
 <!-- Counter Scripts -->
+ 
 <script>
+	// Product Visibility Logic
+	document.addEventListener('DOMContentLoaded', function() {
+    const productItems = document.querySelectorAll('#allProductsContainer .product-item');
+    const viewMoreBtn = document.getElementById('viewMoreProductsBtn');
+    const itemsPerLoad = 3; 
+    let currentlyVisible = itemsPerLoad; 
+    function updateProductVisibility() {
+        productItems.forEach((item, index) => {
+            if (index < currentlyVisible) {
+                item.classList.remove('hidden');
+                item.classList.add('visible');
+           		item.style.display = 'block';
+            } else {
+                item.classList.add('hidden');
+                item.classList.remove('visible');
+                item.style.display = 'none';
+            }
+        });
+
+       
+        updateButtonVisibility();
+    }
+
+    function showNextProductsBatch() {
+        currentlyVisible += itemsPerLoad; 
+        if (currentlyVisible > productItems.length) {
+            currentlyVisible = productItems.length; 
+        }
+        updateProductVisibility();
+    }
+
+    function updateButtonVisibility() {
+        if (currentlyVisible >= productItems.length) {
+            if (viewMoreBtn) { 
+                viewMoreBtn.style.display = 'none';
+            }
+        } else {
+            if (viewMoreBtn) {
+                viewMoreBtn.style.display = 'block'; 
+            }
+        }
+    }
+    if (viewMoreBtn) { 
+        viewMoreBtn.addEventListener('click', showNextProductsBatch);
+    }
+    updateProductVisibility(); 
+});
+
+//clock code
   const launchDate = new Date("2025-09-01T00:00:00"); // Set your launch date here
 
   function updateCountdown() {
@@ -311,7 +452,7 @@
   const app = initializeApp(firebaseConfig);
   const database = getDatabase(app);
 
-  function isValidPhone(phone) 
+  function isValidPhone(phone)
   {
      const regex = /^[+\d\s]+$/;
      return regex.test(phone);
@@ -333,7 +474,7 @@
     if (!email || !name || !phone) {
       alert("Please fill all fields.");
       return;
-    } 
+    }
 	
 	if (!isValidPhone(phone)) {
         alert("Please enter a valid number.");
@@ -370,21 +511,23 @@
         messageDiv.style.display = 'block';
       });
 
-    // --- Send the email to your backend server for processing ---
+
+     // Send the email to the backend for processing
     fetch('http://localhost:3000/send-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email, name, phone }) // Sending all data
+      body: JSON.stringify({ email }) // Send email data to backend
     })
-      .then(response => response.json())
-      .then(data => {
-        console.log('Email send status:', data.message);
-      })
-      .catch(error => {
-        console.error('Error sending email:', error);
-      });
+    .then(response => response.json())
+    .then(data => {
+      console.log('Email send status:', data.message);
+    })
+    .catch(error => {
+      console.error('Error sending email:', error);
+    });
+
   });
 
   // --- Handle Q&A form submission ---
@@ -429,9 +572,8 @@
       msgDiv.style.display = 'none';
     }, 5000);
   }
+
 </script>
-
-
 
 	</body>
 </html>

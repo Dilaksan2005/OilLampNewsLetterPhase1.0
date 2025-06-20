@@ -1,40 +1,43 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-
-// Initialize express app
 const app = express();
 const PORT = 3000;
 
-// Middleware for handling JSON requests and enabling CORS
 app.use(cors());
-app.use(express.json()); // Replacing body-parser with express built-in method
+app.use(express.json()); 
+
+// Serve all static files in the current root directory
+app.use(express.static(__dirname));
+
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Create the transporter for sending emails
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 465,
-  secure: true, // Use SSL
+  secure: true,
   auth: {
-    user: 'mrn7king@gmail.com', // Your Gmail address
-    pass: 'hzshmabvcutbvvof',  // Your Gmail App Password
+    user: 'info.elegancecandles@gmail.com ', // Your Gmail address
+    pass: 'snbbnjucnnwusjua',  // Your Gmail App Password
   },
 });
 
-// POST route to handle sending email
+
 app.post('/send-email', async (req, res) => {
   const { email } = req.body;
 
-  // Validate the email input
   if (!email) {
     return res.status(400).json({ message: 'Email address is required' });
   }
 
   try {
-    // Send the email using nodemailer
     const info = await transporter.sendMail({
-      from: '"Oil Lamp Newsletter" <mrn7king@gmail.com>',
-      to: email,  
+      from: '"Oil Lamp Newsletter" <info.elegancecandles@gmail.com>',
+      to: email,
       subject: 'Welcome to Our Newsletter!',
       html: `
         <html>
@@ -112,18 +115,15 @@ app.post('/send-email', async (req, res) => {
       `
     });
     
-    // Respond with a success message
     res.status(200).json({ message: 'Email sent successfully!', messageId: info.messageId });
     console.log("Email sent:", info.messageId);
 
   } catch (error) {
-    // Handle errors and respond with failure message
     console.error("Error sending email:", error);
     res.status(500).json({ message: 'Error sending email', error: error.message });
   }
 });
 
-// Start the server on port 3000
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
