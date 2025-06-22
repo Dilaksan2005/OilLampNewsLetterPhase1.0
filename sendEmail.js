@@ -22,7 +22,7 @@ const transporter = nodemailer.createTransport({
   secure: true,
   auth: {
     user: 'info.elegancecandles@gmail.com ', // Your Gmail address
-    pass: 'snbbnjucnnwusjua',  // Your Gmail App Password
+    pass: 'auvfhfchdwmdguzg',  // Your Gmail App Password
   },
 });
 
