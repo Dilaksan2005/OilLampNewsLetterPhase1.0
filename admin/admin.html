@@ -1,3 +1,4 @@
+<!--file:OilLampNewsLetterPhase1.0/admin/admin.html-->
 <!DOCTYPE HTML>
 <html>
 
@@ -5,9 +6,9 @@
 	<title>Admin Page</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<link rel="stylesheet" href="assets/css/main.css" />
+	<link rel="stylesheet" href="../assets/css/main.css" />
 	<noscript>
-		<link rel="stylesheet" href="assets/css/noscript.css" />
+		<link rel="stylesheet" href="../assets/css/noscript.css" />
 	</noscript>
 </head>
 
@@ -158,19 +159,21 @@
 		</div>
 
 		<!-- Scripts -->
-		<script src="assets/js/jquery.min.js"></script>
-		<script src="assets/js/jquery.scrollex.min.js"></script>
-		<script src="assets/js/jquery.scrolly.min.js"></script>
-		<script src="assets/js/browser.min.js"></script>
-		<script src="assets/js/breakpoints.min.js"></script>
-		<script src="assets/js/util.js"></script>
-		<script src="assets/js/main.js"></script>
+		<script src="../assets/js/jquery.min.js"></script>
+		<script src="../assets/js/jquery.scrollex.min.js"></script>
+		<script src="../assets/js/jquery.scrolly.min.js"></script>
+		<script src="../assets/js/browser.min.js"></script>
+		<script src="../assets/js/breakpoints.min.js"></script>
+		<script src="../assets/js/util.js"></script>
+		<script src="../assets/js/main.js"></script>
+
+        
 		<!-- Add these scripts before your closing </body> tag -->
 		<script type="module">
     // Import Firebase modules
     import { 
         initializeApp 
-    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { 
         getDatabase, 
         ref, 
@@ -179,7 +182,8 @@
         limitToFirst, 
         orderByKey, 
         startAfter 
-    } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
     // Firebase configuration
     const firebaseConfig = {
@@ -195,7 +199,15 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
     const database = getDatabase(app);
+
+   onAuthStateChanged(auth, (user) => {
+    // Convert both emails to lowercase for comparison
+    if (!user || user.email.toLowerCase() !== "info.elegancecandles@gmail.com".toLowerCase()) {
+        window.location.href = "login.html";
+    }
+});
 
     // Pagination variables for subscribers
     let lastSubscriberKey = null;

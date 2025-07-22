@@ -1,3 +1,4 @@
+<!--file:OilLampNewsLetterPhase1.0/index.html-->
 <!DOCTYPE HTML>
 <html style=" scroll-behavior: smooth; ">
 	<head>
@@ -440,48 +441,16 @@
 						<section>
 						<!-- Product Cards Ends-->
 						<!-- Q&A Form -->
-									<form id="userSurveyForm">
-										<h2 style="text-align: center;">Tell Us About Yourself</h2>
-										<p style="text-align: center;">Answer a few quick questions so we can tailor your candle buying experience.</p>
-										<hr>
-										<div class="row gtr-uniform">
-									
-											<!-- Q1 -->
-											<div class="col-12">
-												<h3>Are you looking to buy candles?</h3>
-												<input type="radio" id="buyYes" name="buyCandles" value="Yes">
-												<label for="buyYes">Yes</label>
-									
-												<input type="radio" id="buyNo" name="buyCandles" value="No">
-												<label for="buyNo">No</label>
-											</div>
-									
-											<!-- Q2 -->
-											<div class="col-12">
-												<h3>Are you an individual or a business?</h3>
-												<select name="userType" id="userType">
-													<option value="">- Select -</option>
-													<option value="Individual">Individual</option>
-													<option value="Business">Business</option>
-												</select>
-											</div>
-									
-											<!-- Q3 -->
-											<div class="col-12">
-												<h3>Can you share your name and postal address?</h3>
-												<textarea name="userDetails" id="userDetails" placeholder="Enter your name and address" rows="4"></textarea>
-											</div>
-									
-											<div class="col-12">
-												<ul class="actions">
-													<li><input type="submit" value="Submit Survey" class="primary" /></li>
-													<li><input type="reset" value="Reset" /></li>
-												</ul>
-											</div>
+						<!--Q&A Form is removed and changed with client request-->			
+										<h2 style="text-align: center; margin-bottom: 0%;">Looking for Custom Candles?</h2>
+										<p style="text-align: center; margin-top: 0%;">We now offer personalized candles… tailored to your brand, event, or aesthetic. Choose
+											your scent, style, and packaging.</p>
+										<div style="text-align: center;">
+											<a href="#" class="button primary disabled" >Contact Us for Custom Orders</a>
 										</div>
-									</form>
+										<hr>
+
 									
-									<div id="surveyMessage" style="display:none; text-align:center;"></div><hr />
 						
 						<!-- End Q&A Form -->
 						</section>
@@ -515,7 +484,7 @@
 								</div>
 								<ul class="actions">
 									<li><input type="submit" value="Subscribe" /></li>
-                                     <li><Button class="button"><a href="admin.html"> Admin Panel (temporary link)</a></Button></li>
+                                     <li><Button class="button"><a href="/admin/admin.html"> Admin Panel (temporary link)</a></Button></li>
 								</ul>
    								  
 								  <div id="formMessage" style="display:none; margin-top: 20px;"></div>
@@ -813,38 +782,6 @@
       console.error('Error sending email:', error);
     });
 
-  });
-
-  // --- Handle Q&A form submission ---
-  document.getElementById('userSurveyForm').addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    // Capture input values
-    const buyCandles = document.querySelector('input[name="buyCandles"]:checked')?.value;
-    const userType = document.getElementById('userType').value.trim();
-    const userDetails = document.getElementById('userDetails').value.trim();
-    const timestamp = new Date().toISOString();
-
-    // Validation
-    if (!buyCandles || !userType || !userDetails) {
-      displaySurveyMessage('Please fill out all fields.', 'red');
-      return;
-    }
-
-    // Push to Firebase under 'qa_responses' node
-    push(ref(database, 'qa_responses'), {
-      buyCandles: buyCandles,
-      userType: userType,
-      userDetails: userDetails,
-      date: timestamp
-    })
-      .then(() => {
-        displaySurveyMessage('Thank you! Your response has been submitted.', 'green');
-        document.getElementById('userSurveyForm').reset();
-      })
-      .catch((error) => {
-        displaySurveyMessage('Error: ' + error.message, 'red');
-      });
   });
 
   // Function to show survey message
