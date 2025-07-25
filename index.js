@@ -2,7 +2,7 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 const app = express();
-const PORT = 3000;
+const port = parseInt(process.env.PORT, 10) || 3000;
 const path = require('path'); // Import path module
 
 const YOUR_ABSOLUTE_BACKGROUND_IMAGE_URL = ''; // Replace with your absolute image URL
@@ -167,6 +167,6 @@ app.post('/send-email', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(port, '0.0.0.0', () => {
+  console.log(`Listening on ${port}`);
 });
