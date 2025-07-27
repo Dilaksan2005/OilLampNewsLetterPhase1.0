@@ -979,15 +979,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		}); e.preventDefault(); // Prevent form from refreshing the page
 
 		//DATA LAYER PUSH
-document.getElementById('emailForm').addEventListener('submit', function(event) {
-  
+document.getElementById('subscribeBtn').addEventListener('click', function () {
   const email = document.getElementById('email').value;
   const name = document.getElementById('name').value;
   const phone = document.getElementById('PhoneNo').value;
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
-    event: 'newsletterSubscribe',
+    event: 'SubscribeButtonClick',
     newsletterEmail: email,
     newsletterName: name,
     newsletterPhone: phone
