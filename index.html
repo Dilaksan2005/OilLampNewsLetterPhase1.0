@@ -10,6 +10,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-NMM2DSVH');</script>
 <!-- End Google Tag Manager -->
+	<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V4DPFS5FGL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-V4DPFS5FGL');
+</script>
 	<title>Elegance Candles</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -969,6 +978,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 			}
 		}); e.preventDefault(); // Prevent form from refreshing the page
 
+		//DATA LAYER PUSH
+document.getElementById('emailForm').addEventListener('submit', function(event) {
+  
+  const email = document.getElementById('email').value;
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('PhoneNo').value;
+
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'newsletterSubscribe',
+    newsletterEmail: email,
+    newsletterName: name,
+    newsletterPhone: phone
+  });
+});
 	</script>
 
 </body>
