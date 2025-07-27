@@ -943,7 +943,7 @@
 				document.getElementById('emailForm').reset();
 
 				// --- Send email to backend (if needed) ---
-				fetch('http://localhost:3000/send-email', {
+				fetch('https://elegancecandles.onrender.com/send-email', {
 					method: 'POST',
 					headers: { 'Content-Type': 'application/json' },
 					body: JSON.stringify({ email, name})
