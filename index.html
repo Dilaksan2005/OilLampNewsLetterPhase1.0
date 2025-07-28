@@ -979,19 +979,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 		}); e.preventDefault(); // Prevent form from refreshing the page
 
 		//DATA LAYER PUSH
-document.getElementById('subscribeBtn').addEventListener('click', function () {
-  const email = document.getElementById('email').value;
-  const name = document.getElementById('name').value;
-  const phone = document.getElementById('PhoneNo').value;
+document.getElementById('emailForm').addEventListener('submit', function (e) {
+  const email = document.getElementById('email').value.trim();
+  const name = document.getElementById('name').value.trim();
+  const phone = document.getElementById('PhoneNo').value.trim();
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
-    event: 'SubscribeButtonClick',
+    event: 'newsletterSubmit',
     newsletterEmail: email,
     newsletterName: name,
     newsletterPhone: phone
   });
+
 });
+
 	</script>
 
 </body>
