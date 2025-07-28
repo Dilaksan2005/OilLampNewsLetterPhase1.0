@@ -980,13 +980,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 		//DATA LAYER PUSH
 document.getElementById('emailForm').addEventListener('submit', function (e) {
+	 e.preventDefault();
   const email = document.getElementById('email').value.trim();
   const name = document.getElementById('name').value.trim();
   const phone = document.getElementById('PhoneNo').value.trim();
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({
-    event: 'newsletterSubmit',
+    event: 'form_submit',
     newsletterEmail: email,
     newsletterName: name,
     newsletterPhone: phone
