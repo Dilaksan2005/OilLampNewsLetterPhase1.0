@@ -3,11 +3,28 @@
 <html style=" scroll-behavior: smooth; ">
 
 <head>
+     <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NMM2DSVH');</script>
+<!-- End Google Tag Manager -->
+	<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V4DPFS5FGL"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-V4DPFS5FGL');
+</script>
 
 	<title>Elegance Candles — Handcrafted Candles & Oil Lamps | Sri Lanka </title>
 	<meta name="description"
 		content="Elegance Candles — handcrafted soy candles, decorative oil lamps, and holders. Long-burning, eco-friendly scents perfect for home & events.">
 	<link rel="canonical" href="https://elegancecandles.store/">
+
+	
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 
@@ -346,9 +363,9 @@
 
 <body class="is-preload">
 	<!-- Google Tag Manager (noscript) -->
-	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NMM2DSVH" height="0" width="0"
-			style="display:none;visibility:hidden"></iframe></noscript>
-	<!-- End Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NMM2DSVH"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
 	<!--Loader-->
 	<div id="loader-wrapper">
 		<div class="loader"></div>
@@ -682,9 +699,6 @@
 						<li><input type="submit" value="Subscribe" id="subscribeBtn" />
 							<span class="loading-spinner" id="loadingSpinner"></span>
 						</li>
-
-						<li><Button class="button"><a href="/admin/admin.html"> Admin Panel (temporary
-									link)</a></Button></li>
 					</ul>
 
 					<div id="formMessage" style="display:none; margin-top: 20px;"></div>
@@ -889,199 +903,166 @@
 	<script src="assets/js/main.js"></script>
 
 	<script type="module">
-		// --- Firebase SDK imports ---
-		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-		import { getDatabase, ref, push, query, orderByChild, equalTo, get } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
+  // --- Firebase SDK imports ---
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+  import { getDatabase, ref, push, get } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-database.js";
 
-		// --- Firebase configuration ---
-		const firebaseConfig = {
-			apiKey: "AIzaSyCDGVmZwmJ4m-JicDa-bXEma9sp8bo9Uos",
-			authDomain: "oillampnewsletterapp.firebaseapp.com",
-			databaseURL: "https://oillampnewsletterapp-default-rtdb.asia-southeast1.firebasedatabase.app",
-			projectId: "oillampnewsletterapp",
-			storageBucket: "oillampnewsletterapp.firebasestorage.app",
-			messagingSenderId: "435713516292",
-			appId: "1:435713516292:web:f0a18ac7f61d61bbc02651",
-			measurementId: "G-5J5BPKEP7W"
-		};
+  // --- Firebase configuration ---
+  const firebaseConfig = {
+    apiKey: "AIzaSyCDGVmZwmJ4m-JicDa-bXEma9sp8bo9Uos",
+    authDomain: "oillampnewsletterapp.firebaseapp.com",
+    databaseURL: "https://oillampnewsletterapp-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "oillampnewsletterapp",
+    storageBucket: "oillampnewsletterapp.firebasestorage.app",
+    messagingSenderId: "435713516292",
+    appId: "1:435713516292:web:f0a18ac7f61d61bbc02651",
+    measurementId: "G-5J5BPKEP7W"
+  };
 
-		// --- Initialize Firebase app and database ---
-		const app = initializeApp(firebaseConfig);
-		const database = getDatabase(app);
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
 
-		// --- Validation functions ---
-		function isValidEmail(email) {
-			const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-			return regex.test(email);
-		}
+  // --- Validation ---
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
 
-		function isValidPhone(phone) {
-			const regex = /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]{7,15}$/;
-			return regex.test(phone);
-		}
+  function isValidPhone(phone) {
+    return /^[+]?[(]?[0-9]{1,4}[)]?[-\s./0-9]{7,15}$/.test(phone);
+  }
 
-		function isValidName(name) {
-			return name.trim().length >= 2;
-		}
+  function isValidName(name) {
+    return name.trim().length >= 2;
+  }
 
-		// --- Show validation error ---
-		function showError(elementId, message) {
-			const errorElement = document.getElementById(elementId);
-			errorElement.textContent = message;
-			errorElement.classList.add('show');
-		}
+  function showError(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.classList.add('show');
+  }
 
-		// --- Hide validation error ---
-		function hideError(elementId) {
-			const errorElement = document.getElementById(elementId);
-			errorElement.classList.remove('show');
-		}
+  function hideError(id) {
+    document.getElementById(id).classList.remove('show');
+  }
 
-		// --- Display form message ---
-		function displayMessage(message, color) {
-			const messageDiv = document.getElementById('formMessage');
-			messageDiv.textContent = message;
-			messageDiv.style.color = color;
-			messageDiv.style.display = 'block';
+  function displayMessage(message, color) {
+    const msgDiv = document.getElementById('formMessage');
+    msgDiv.textContent = message;
+    msgDiv.style.color = color;
+    msgDiv.style.display = 'block';
+    setTimeout(() => {
+      msgDiv.style.display = 'none';
+    }, 5000);
+  }
 
-			setTimeout(() => {
-				messageDiv.style.display = 'none';
-			}, 5000);
-		}
+  async function emailExists(email) {
+    try {
+      const emailRef = ref(database, 'newsletter_signups');
+      const snapshot = await get(emailRef);
+      if (!snapshot.exists()) return false;
+      const lowerEmail = email.toLowerCase();
+      let found = false;
+      snapshot.forEach(child => {
+        const childEmail = child.val().email || '';
+        if (childEmail.toLowerCase() === lowerEmail) {
+          found = true;
+        }
+      });
+      return found;
+    } catch (err) {
+      console.error('Error checking email:', err);
+      return false;
+    }
+  }
 
-		// --- Check if email already exists in database (FIXED) ---
-		async function emailExists(email) {
-			try {
-				const emailRef = ref(database, 'newsletter_signups');
-				const snapshot = await get(emailRef);
+  // --- Main Submit Logic ---
+  document.getElementById('emailForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-				if (!snapshot.exists()) return false;
+    const email = document.getElementById('email').value.trim();
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('PhoneNo').value.trim();
+    const timestamp = new Date().toISOString();
+    const honeypot = document.getElementById('honeypot').value.trim();
 
-				// Case-insensitive check
-				const emailLower = email.toLowerCase();
-				let exists = false;
+    if (honeypot) {
+      displayMessage('Bot activity detected.', 'red');
+      return;
+    }
 
-				snapshot.forEach(child => {
-					const childEmail = child.val().email || '';
-					if (childEmail.toLowerCase() === emailLower) {
-						exists = true;
-					}
-				});
+    let valid = true;
+    hideError('email-error');
+    hideError('name-error');
+    hideError('phone-error');
 
-				return exists;
-			} catch (error) {
-				console.error('Error checking email existence:', error);
-				return false;
-			}
-		}
+    if (!email || !isValidEmail(email)) {
+      showError('email-error', 'Please enter a valid email');
+      valid = false;
+    }
+    if (!name || !isValidName(name)) {
+      showError('name-error', 'Please enter a valid name');
+      valid = false;
+    }
+    if (!phone || !isValidPhone(phone)) {
+      showError('phone-error', 'Please enter a valid phone number');
+      valid = false;
+    }
 
+    if (!valid) return;
 
-		// --- Handle newsletter form submission (FIXED) ---
-		document.getElementById('emailForm').addEventListener('submit', async function (e) {
-			e.preventDefault(); // Prevent form from refreshing the page
+    const subscribeBtn = document.getElementById('subscribeBtn');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+    subscribeBtn.disabled = true;
+    loadingSpinner.style.display = 'inline-block';
 
-			// --- Capture form values ---
-			const email = document.getElementById('email').value.trim();
-			const name = document.getElementById('name').value.trim();
-			const phone = document.getElementById('PhoneNo').value.trim();
-			const timestamp = new Date().toISOString();
+    try {
+      const exists = await emailExists(email);
+      if (exists) {
+        displayMessage('You are already subscribed!', '#e67e22');
+        return;
+      }
 
-			// --- Bot detection using honeypot ---
-			const honeypotValue = document.getElementById('honeypot').value.trim();
-			if (honeypotValue) {
-				displayMessage('Bot activity detected. Please try again.', 'red');
-				return;
-			}
+      // ✅ Push to Data Layer (Client & Server)
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: 'form_submit',
+        newsletterEmail: email,
+        newsletterName: name,
+        newsletterPhone: phone,
+        eventCallback: function () {
+          console.log("form_submit event pushed successfully.");
+        }
+      });
 
-			// --- Validation ---
-			let isValid = true;
+      // ✅ Save to Firebase
+      await push(ref(database, 'newsletter_signups'), {
+        email: email,
+        name: name,
+        phone: phone,
+        date: timestamp
+      });
 
-			// Reset previous errors
-			hideError('email-error');
-			hideError('name-error');
-			hideError('phone-error');
+      // ✅ Send to email backend
+      fetch('https://elegancecandles.onrender.com/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, name })
+      })
+        .then(res => res.json())
+        .then(data => console.log('Email send status:', data.message))
+        .catch(err => console.error('Error sending email:', err));
 
-			// Email validation
-			if (!email) {
-				showError('email-error', 'Email is required');
-				isValid = false;
-			} else if (!isValidEmail(email)) {
-				showError('email-error', 'Please enter a valid email');
-				isValid = false;
-			}
-
-			// Name validation
-			if (!name) {
-				showError('name-error', 'Name is required');
-				isValid = false;
-			} else if (!isValidName(name)) {
-				showError('name-error', 'Name must be at least 2 characters');
-				isValid = false;
-			}
-
-			// Phone validation
-			if (!phone) {
-				showError('phone-error', 'Phone number is required');
-				isValid = false;
-			} else if (!isValidPhone(phone)) {
-				showError('phone-error', 'Please enter a valid phone number (8-15 digits)');
-				isValid = false;
-			}
-
-			if (!isValid) return;
-
-			// --- Show loading spinner ---
-			const subscribeBtn = document.getElementById('subscribeBtn');
-			const loadingSpinner = document.getElementById('loadingSpinner');
-			subscribeBtn.disabled = true;
-			loadingSpinner.style.display = 'inline-block';
-
-			try {
-				// --- Check if email is already subscribed (FIXED) ---
-				const alreadySubscribed = await emailExists(email);
-				if (alreadySubscribed) {
-					displayMessage('You are already subscribed!', '#e67e22');
-					subscribeBtn.disabled = false;
-					loadingSpinner.style.display = 'none';
-					return;
-				}
-
-				// --- Save to Firebase under 'newsletter_signups' node ---
-				await push(ref(database, 'newsletter_signups'), {
-					email: email,
-					name: name,
-					phone: phone,
-					date: timestamp
-				});
-
-				// --- Success feedback ---
-				displayMessage('Thank you for subscribing!', 'green');
-
-				// --- Reset the form ---
-				document.getElementById('emailForm').reset();
-
-				// --- Send email to backend (if needed) ---
-				fetch('http://localhost:3000/send-email', {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({ email, name })
-				})
-					.then(response => response.json())
-					.then(data => console.log('Email send status:', data.message))
-					.catch(error => console.error('Error sending email:', error));
-
-			} catch (error) {
-				// --- Handle Firebase errors ---
-				console.error('Firebase error:', error);
-				displayMessage('Error: ' + error.message, 'red');
-			} finally {
-				// --- Hide loading spinner ---
-				subscribeBtn.disabled = false;
-				loadingSpinner.style.display = 'none';
-			}
-		}); e.preventDefault(); // Prevent form from refreshing the page
-
-	</script>
+      displayMessage('Thank you for subscribing!', 'green');
+      document.getElementById('emailForm').reset();
+    } catch (err) {
+      console.error('Error:', err);
+      displayMessage('Error: ' + err.message, 'red');
+    } finally {
+      subscribeBtn.disabled = false;
+      loadingSpinner.style.display = 'none';
+    }
+  });
+</script>
 
 </body>
 
