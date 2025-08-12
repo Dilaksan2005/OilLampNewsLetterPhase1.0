@@ -2,6 +2,15 @@ const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 const app = express();
+
+app.use((req, res, next) => {
+  // Only handle requests to your root domain (no subdomains)
+  if (req.hostname === 'elegancecandles.store' && req.path === '') {
+    return res.redirect(301, 'https://elegancecandles.store/');
+  }
+  next();
+});
+
 const port = parseInt(process.env.PORT, 10) || 3000;
 const path = require('path'); // Import path module
 
